@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     #! Libraries
     "rest_framework",
+    "django_filters",
     #! My Apps
     "news.apps.NewsConfig",
 ]
