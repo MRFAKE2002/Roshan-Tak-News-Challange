@@ -1,3 +1,14 @@
-from django.shortcuts import render
+# Libraries
+from rest_framework import generics
 
-# Create your views here.
+# My Apps
+from .models import News
+from .serializers import NewsSerializers
+
+
+# ---------------------------------------< News List >----------------------------------- #
+
+
+class NewsList(generics.ListAPIView):
+    queryset = News.objects.prefetch_related("tags").all().order_by("-created_at")
+    serializer_class = NewsSerializers
