@@ -1,0 +1,5 @@
+release: python manage.py migrate
+web: gunicorn your_django_project.wsgi
+celery: celery -A your_django_project worker --loglevel=info
+celery-beat: celery -A your_django_project beat --loglevel=info
+flower: celery -A your_django_project flower --port=5555
