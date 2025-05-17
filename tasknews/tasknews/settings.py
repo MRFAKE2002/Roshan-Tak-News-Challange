@@ -84,6 +84,14 @@ WSGI_APPLICATION = "tasknews.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+#! Postgres
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -154,7 +162,7 @@ CELERY_TASK_SERIALIZER = "json"
 
 CELERY_BEAT_SCHEDULE = {
     "scrape-every-10-minutes": {
-        "task": "tasknews.zoomit_scraping.get_save_zoomit_articles",
+        "task": "zoomit_scraper.tasks.get_save_zoomit_articles",
         "schedule": crontab(minute="*/10"),
     },
 }
