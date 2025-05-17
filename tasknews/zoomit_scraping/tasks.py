@@ -19,7 +19,7 @@ from news.models import News, Tags
 
 
 @shared_task
-def main():
+def get_save_zoomit_articles():
     article_links = get_article_links()
     print(f"There is {len(article_links)} articles here.")
     print("-----------------------------------")
@@ -57,4 +57,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    get_save_zoomit_articles()

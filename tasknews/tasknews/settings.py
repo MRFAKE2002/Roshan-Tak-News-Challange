@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+
+#! Libraries
 from celery.schedules import crontab
+from decouple import config, Csv
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-a%(z%@+nbb(9*sm=!+vjnvp-5pb@%e!+m13r595nb=7i&a-%1c"
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".pythonanywhere.com"]
 
 
 # Application definition
@@ -139,8 +142,8 @@ REST_FRAMEWORK = {
 }
 
 #! Celery
-CELERY_BROKER_URL = "redis://redis:6379/0"
-CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+CELERY_BROKER_URL = config("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = config("CELERY_RESULT_BACKEND")
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 CELERY_ACCEPT_CONTENT = ["json"]
@@ -148,7 +151,7 @@ CELERY_TASK_SERIALIZER = "json"
 
 CELERY_BEAT_SCHEDULE = {
     "scrape-every-10-minutes": {
-        "task": "news.tasks.scrape_zoomit_articles",
+        "task": "tasknews.zoomit_scraping.get_save_zoomit_articles",
         "schedule": crontab(minute="*/10"),
     },
 }
