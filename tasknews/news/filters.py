@@ -5,15 +5,16 @@ from django.db.models import Q
 from django_filters import rest_framework as filters
 
 # My Apps
-from .models import News
+from .models import News, Tags
 
 
 class NewsFilter(filters.FilterSet):
-    tags = filters.CharFilter(
+    tags = filters.ModelMultipleChoiceFilter(
         field_name="tags__name",
-        lookup_expr="in",
-        method="filter_by_tags",
-        label="Filter By Tags",
+        to_field_name="name",
+        queryset=Tags.objects.all(),
+        label="Filter by Tags",
+        conjoined=False,
     )
     search = filters.CharFilter(method="filter_by_keyword", label="Filter By Keyword")
     exclude = filters.CharFilter(
@@ -22,7 +23,7 @@ class NewsFilter(filters.FilterSet):
 
     class Meta:
         model = News
-        fields = []
+        fields = ["tags"]
 
     def filter_by_tags(self, queryset, name, value):
         tags = [tag.strip() for tag in value.split(" ")]
