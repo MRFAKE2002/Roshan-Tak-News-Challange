@@ -19,7 +19,7 @@ class NewsAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "title",
-        "content",
+        "short_content",
         "source",
         "get_tags",
         "get_tags_count",
@@ -31,6 +31,15 @@ class NewsAdmin(admin.ModelAdmin):
     list_filter = ["tags"]
 
     search_fields = ["title", "content"]
+
+    def short_content(self, obj):
+        """
+        Show just 10 words of content.
+        """
+        words = obj.content.split()
+        return " ".join(words[:10]) + ("..." if len(words) > 10 else "")
+
+    short_content.short_description = "Content"
 
     def get_tags(self, obj):
         """
