@@ -1,4 +1,5 @@
 # Libraries
+import chromedriver_autoinstaller
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -7,8 +8,14 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 def create_driver():
+    chromedriver_autoinstaller.install()
+
     options = Options()
     options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.binary_location = "/usr/bin/chromium"
+
     return webdriver.Chrome(options=options)
 
 
