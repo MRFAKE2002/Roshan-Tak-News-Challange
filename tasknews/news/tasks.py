@@ -1,17 +1,5 @@
-# Django
-import django
-
 # Libraries
-import os
-import sys
-import pathlib
 from celery import shared_task
-
-
-sys.path.append(str(pathlib.Path(__file__).resolve().parent.parent))
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tasknews.settings")
-django.setup()
 
 # My Apps
 from zoomit_scraping.scraper import get_article_links, extract_article_data
