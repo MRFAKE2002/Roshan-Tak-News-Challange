@@ -162,7 +162,7 @@ CELERY_TASK_SERIALIZER = "json"
 
 CELERY_BEAT_SCHEDULE = {
     "scrape-every-10-minutes": {
-        "task": "zoomit_scraper.tasks.get_save_zoomit_articles",
+        "task": "news.tasks.get_save_zoomit_articles",
         "schedule": crontab(minute="*/10"),
     },
 }
